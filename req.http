@@ -1,0 +1,148 @@
+### user register
+POST http://localhost:4000/user-api/users
+Content-Type: application/json
+
+{
+    "fisrtName":"Ravi",
+    "lastName":"User",
+    "email":"ravi.user@example.com",
+    "password":"Ravi@12345",
+    "profileImageUrl":""
+}
+
+
+### author register
+POST  http://localhost:4000/author-api/users
+Content-Type: application/json
+  
+{
+    "fisrtName":"Vikas",
+    "lastName":"Author",
+    "email":"Vikas.author@example.com",
+    "password":"vikas@12345",
+    "profileImageUrl":""
+}
+
+
+### authenticating author or login
+POST http://localhost:4000/common-api/login
+Content-Type: application/json
+
+{
+    "email":"Vikas.author@example.com",
+    "password":"vikas@12345"
+    
+} 
+
+
+### authenticating user or login
+POST http://localhost:4000/common-api/login
+Content-Type: application/json
+
+{
+    "email":"ravi.user@example.com",
+    "password":"Ravi@12345"
+    
+}
+
+### authenticate admin - login
+POST http://127.0.0.1:4000/common-api/login
+Content-Type: application/json
+
+{
+    "email":"admin@mail.com",
+    "password":"admin123"
+}
+
+
+###create article
+POST http://localhost:4000/author-api/articles
+Content-Type: application/json
+
+{
+    "author":"69896b3816052123bf15dfbc",
+    "title":"math",
+    "category":"matrix",
+    "content":"column and rows"
+}
+
+
+#### read all articles of the author
+get http://localhost:4000/author-api/articles/69896b3816052123bf15dfbc
+
+
+###update article 
+PUT  http://localhost:4000/author-api/articles
+Content-Type: application/json
+
+{
+    "author":"69896b3816052123bf15dfbc",
+    "articleId":"69897a62f75c78a7afdafbfb",
+    "title":"social",
+    "category":"history",
+    "content":"india"
+}
+
+#### delete article
+DELETE   http://localhost:4000/author-api/articles
+Content-Type: application/json
+
+{
+    "author":"69896b3816052123bf15dfbc",
+    "articleId":"69897a62f75c78a7afdafbfb"
+   
+}  
+
+
+### read all articles 
+GET http://localhost:4000/user-api/articles
+
+ 
+### common logout for all 
+GET  http://localhost:4000/common-api/logout
+
+
+### add comments to artilces
+POST http://127.0.0.1:4000/user-api/articles
+Content-Type: application/json
+
+{
+    "user":"69896a237f6161a0db1db588",
+    "articleId":"69897a62f75c78a7afdafbfb",
+    "comments":"good content by author"
+}
+
+
+###block user
+PUT http://localhost:4000/admin-api/users/block
+Content-Type:application/json
+
+{   "admin":"698ac05f7c3bf2598f56c159",
+    "user":"69896a237f6161a0db1db588"
+}
+
+
+###unblock
+PUT http://localhost:4000/admin-api/users/unblock
+Content-Type:application/json
+
+{   "admin":"698ac05f7c3bf2598f56c159",
+    "user":"69896a237f6161a0db1db588"
+}
+
+
+
+###change password
+put http://localhost:4000/common-api/change-password
+Content-Type: application/json
+
+{
+    "currentPass":"vikas@123",
+    "newPass":"vikas@12345",
+    "email":"Vikas.author@example.com"
+}
+
+
+
+### test req
+GET http://localhost:4000/test
