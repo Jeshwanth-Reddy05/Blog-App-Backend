@@ -2,6 +2,7 @@ import exp from "express";
 import { authenticate } from "../Services/authService.js";
 import { UserTypeModel } from "../models/UserTypeModel.js";
 import { compare, hash } from "bcryptjs";
+import { verifyToken } from "../middlewares/verifyToken.js";
 
 export const commonRouter = exp.Router();
 
@@ -19,6 +20,14 @@ commonRouter.post("/login", async (req, res) => {
   });
   //send res
   res.status(200).json({ message: "login sucess", payload: user });
+});
+
+//check-auth
+commonRouter.get("/check-auth", verifyToken("ADMIN","USER","AUTHOR"), (req, res) => {
+  res.status(200).json({
+    message: "Authenticated",
+    payload: req.user,
+  });
 });
 
 //logout
@@ -63,3 +72,4 @@ commonRouter.put("/change-password", async (req, res) => {
   await userDoc.save();
   res.status(200).json({message :"password has been updated"})
 });
+

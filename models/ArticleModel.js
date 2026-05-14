@@ -38,7 +38,7 @@ const articleSchema = new Schema(
     },
   },
   {
-    timeseries: true,
+    timestamps: true,
     strict: "throw",
     versionKey: false,
   },

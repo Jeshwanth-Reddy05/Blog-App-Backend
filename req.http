@@ -1,14 +1,4 @@
-### user register
-POST http://localhost:4000/user-api/users
-Content-Type: application/json
 
-{
-    "fisrtName":"Ravi",
-    "lastName":"User",
-    "email":"ravi.user@example.com",
-    "password":"Ravi@12345",
-    "profileImageUrl":""
-}
 
 
 ### author register
@@ -16,10 +6,10 @@ POST  http://localhost:4000/author-api/users
 Content-Type: application/json
   
 {
-    "fisrtName":"Vikas",
+    "fisrtName":"Vinay",
     "lastName":"Author",
-    "email":"Vikas.author@example.com",
-    "password":"vikas@12345",
+    "email":"Vinay.author@example.com",
+    "password":"vinay@12345",
     "profileImageUrl":""
 }
 
@@ -35,15 +25,6 @@ Content-Type: application/json
 } 
 
 
-### authenticating user or login
-POST http://localhost:4000/common-api/login
-Content-Type: application/json
-
-{
-    "email":"ravi.user@example.com",
-    "password":"Ravi@12345"
-    
-}
 
 ### authenticate admin - login
 POST http://127.0.0.1:4000/common-api/login
@@ -61,14 +42,14 @@ Content-Type: application/json
 
 {
     "author":"69896b3816052123bf15dfbc",
-    "title":"math",
-    "category":"matrix",
-    "content":"column and rows"
+    "title":"samsung",
+    "category":"phones",
+    "content":"only s series"
 }
 
 
 #### read all articles of the author
-get http://localhost:4000/author-api/articles/69896b3816052123bf15dfbc
+GET http://localhost:4000/author-api/articles
 
 
 ###update article 
@@ -78,39 +59,30 @@ Content-Type: application/json
 {
     "author":"69896b3816052123bf15dfbc",
     "articleId":"69897a62f75c78a7afdafbfb",
-    "title":"social",
+    "title":"geo",
     "category":"history",
     "content":"india"
 }
 
 #### delete article
-DELETE   http://localhost:4000/author-api/articles
+PATCH    http://localhost:4000/author-api/articles
 Content-Type: application/json
 
 {
-    "author":"69896b3816052123bf15dfbc",
+    "author":"69ae8a72558ec313cc8c7254",
     "articleId":"69897a62f75c78a7afdafbfb"
    
 }  
 
 
-### read all articles 
-GET http://localhost:4000/user-api/articles
+
 
  
 ### common logout for all 
 GET  http://localhost:4000/common-api/logout
 
 
-### add comments to artilces
-POST http://127.0.0.1:4000/user-api/articles
-Content-Type: application/json
 
-{
-    "user":"69896a237f6161a0db1db588",
-    "articleId":"69897a62f75c78a7afdafbfb",
-    "comments":"good content by author"
-}
 
 
 ###block user
@@ -127,7 +99,7 @@ PUT http://localhost:4000/admin-api/users/unblock
 Content-Type:application/json
 
 {   "admin":"698ac05f7c3bf2598f56c159",
-    "user":"69896a237f6161a0db1db588"
+    "user":"69ae82114966103df9b8d794"
 }
 
 
@@ -143,6 +115,15 @@ Content-Type: application/json
 }
 
 
-
+ 
 ### test req
 GET http://localhost:4000/test
+
+
+
+###softdelete
+PATCH http://localhost:4000/author-api/articles/69899b40a086aa9234ab7554/status
+Content-Type: application/json
+
+{ "isArticleActive": false }
+### to make active or restore set it true

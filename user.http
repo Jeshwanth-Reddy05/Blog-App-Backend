@@ -1,0 +1,51 @@
+### user register
+POST http://localhost:4000/user-api/users
+Content-Type: application/json
+
+{
+    "fisrtName":"nikhil",
+    "lastName":"reddy",
+    "email":"nikhil@gmail.com",
+    "password":"nikhil123",
+    "profileImageUrl":""
+}
+
+
+### authenticating user or login
+POST http://localhost:4000/common-api/login
+Content-Type: application/json
+
+{
+    "email":"rakesh.user@example.com",
+    "password":"Rakesh@12345"
+    
+}
+
+### read all articles 
+GET http://localhost:4000/user-api/articles
+
+
+###change password
+put http://localhost:4000/common-api/change-password
+Content-Type: application/json
+
+{
+    "currentPass":"vikas@123",
+    "newPass":"vikas@12345",
+    "email":"Vikas.author@example.com"
+}
+
+### add comments to artilces
+PUT http://localhost:4000/user-api/articles
+Content-Type: application/json
+
+{
+    "user":"69ae82114966103df9b8d794",
+    "articleId":"698982302f467062b0daa676",
+    "comment":"good content by author"
+}
+
+
+### common logout for all 
+GET  http://localhost:4000/common-api/logout
+
