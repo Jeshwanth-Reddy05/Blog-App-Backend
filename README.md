@@ -1,27 +1,111 @@
-### backend development
+# Blog Application Backend API
 
-1. create git repo
-    git init
+This repository houses the backend REST API engine for the full-stack MERN Blog Application. The system features multi-role permissions (User, Author, Admin), secure password storage, token validation, image uploads via Cloudinary, and relational article-comment management using MongoDB and Mongoose.
 
-2. Add .gitignore file
+---
 
-3. create .env file for envirnoment variables & raed data from .env with "dotenv" module
-    npm i dotenv
+## Core System Features
 
-4. generate package.json
-    npm init -y 
-    change type and file name
+* Role-Based Access Control: Specialized endpoints and middleware constraints for general Readers (Users), Content Creators (Authors), and Moderators (Admins).
+* Image Upload Pipeline: Integrated Multer and Cloudinary configurations to handle avatar and article illustration uploads.
+* Cookie-Based Session Security: Secure login endpoints issuing JSON Web Tokens (JWT) inside HTTP-only cookies.
+* Comprehensive Validation & Error Filtering: Global Express error-catching middleware specialized in processing Mongoose casting errors, validation failures, and duplicate database keys.
 
-5. create express
+---
 
-6. install and import mongoose
+## Folder Structure
 
-7. connect to database
+```
+Blog-App-Backend/
+├── config/             # Multer and Cloudinary system configurations
+├── APIs/               # Specialized Express routers (User, Author, Admin, Common)
+├── middlewares/        # Custom token validation and route permissions
+├── models/             # Mongoose schemas (UserModel, ArticleModel)
+├── Services/           # Shared database operational routines (authService)
+├── server.js           # Server initializer, DB connection, and error middleware
+├── user.http           # Client HTTP test requests (User and Common APIs)
+└── req.http            # Client HTTP test requests (Author and Admin APIs)
+```
 
-8. add middlewares  (body parser,error handling middleware)
+---
 
-9. design schema and create models
+## Environment Configuration
 
-10. design rest APIs for all resources
+To run this application locally, you must create a `.env` file in the root directory and configure the following variables:
 
-11. registration & login 
+```properties
+PORT=4000
+DB_URL=mongodb://localhost:27017/blogapp
+JWT_SECRET=your_jwt_private_key
+FRONTEND_URL=http://localhost:3000
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+```
+
+---
+
+## Installation & Running Locally
+
+### 1. Install Dependencies
+Ensure you have Node.js and MongoDB installed and running on your system.
+```bash
+npm install
+```
+
+### 2. Start the Server
+Run the local HTTP listener:
+```bash
+npm start
+```
+By default, the server runs on port 4000 (or the value set in your environment file).
+
+---
+
+## API Endpoints List
+
+### 1. Common Endpoints (`/common-api`)
+Shared services accessible by all registered user types:
+* POST `/login`: Authenticates credentials, generates JWT, and sets it in the client cookie.
+* PUT `/change-password`: Safe credential renewal verification.
+* GET `/logout`: Clears the HTTP-only authentication cookie from the client.
+
+### 2. General Reader Endpoints (`/user-api`)
+Accessible to registered regular readers:
+* POST `/users`: Creates a new general user account with hashed credentials.
+* GET `/articles`: Retrieves the entire blog feed.
+* PUT `/articles`: Updates articles by adding dynamic comments to the database.
+
+### 3. Author Endpoints (`/author-api`)
+Restricted to content creators (protected by verification middleware):
+* POST `/article`: Saves a new blog post to the database (supports image uploads).
+* GET `/articles/:username`: Retrieves all articles authored by a specific user.
+* PUT `/article`: Modifies existing blog post contents.
+* DELETE `/article/:id`: Removes a specific article from the system.
+
+### 4. Admin Endpoints (`/admin-api`)
+Moderator administrative panel options:
+* GET `/users`: Lists accounts and status logs.
+* DELETE `/articles/:id`: Deletes flags or moderation violations.
+
+---
+
+## Error Response Schemas
+
+All failures are processed by a centralized error-handling middleware:
+
+### Schema Validation Failures (400 Bad Request)
+```json
+{
+  "message": "error occurred",
+  "error": "User validation failed: email: Path `email` is required."
+}
+```
+
+### Duplicate Key Failures (409 Conflict)
+```json
+{
+  "message": "error occurred",
+  "error": "email \"john.doe@example.com\" already exists"
+}
+```
